@@ -85,12 +85,14 @@ void loop() {
       Speed=10;
       rotate=0;
       angle=0;
+      /*
       Serial.print(Speed);
       Serial.print("\n");
       Serial.print(rotate);
       Serial.print("\n");
       Serial.print(angle);
       Serial.print("\n");
+      */
     }
     
     if(IRC==2192 || IRC==3600 || IRC==-28561)                             // REVERSE    
@@ -117,6 +119,7 @@ void loop() {
       angle=0;
     }
     
+    // Touche 1
     if(IRC==16 || IRC==2295)                                            // 45 DEGREES    
     {
       Serial.print("45 Degrees\n"); 
@@ -125,6 +128,7 @@ void loop() {
       angle=45;
     }
     
+    // Touche 2
     if(IRC==3088 || IRC==-30601)                                          // 90 DEGREES    
     {
       Serial.print("90 Degrees\n"); 
@@ -133,6 +137,7 @@ void loop() {
       angle=90;
     }
     
+    // Touche 3
     if(IRC==1552 || IRC==18615)                                          // 135 DEGREES    
     {
       Serial.print("135 Degrees\n"); 
@@ -141,7 +146,8 @@ void loop() {
       angle=135;
     }
     
-    if(IRC==272 || IRC==10445)                                           // 225 DEGREES    
+    // Touche 4
+    if(IRC==272 || IRC==10455)                                           // 225 DEGREES    
     {
       Serial.print("225 Degrees\n"); 
       Speed=10;
@@ -149,7 +155,8 @@ void loop() {
       angle=225;
     }
     
-    if(IRC==2576 || IRC==-22411)                                          // 270 DEGREES    
+    // Touche 5
+    if(IRC==2576 || IRC==-22441)                                          // 270 DEGREES    
     {
       Serial.print("270 Degrees\n"); 
       Speed=10;
@@ -157,6 +164,7 @@ void loop() {
       angle=270;
     }
     
+    // Touche 6
     if(IRC==1040 || IRC==26775)                                          // 315 DEGREES    
     {
       Serial.print("315 Degrees\n"); 
