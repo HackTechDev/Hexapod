@@ -1,3 +1,19 @@
+/*
+Hexapod
+
+Modification : lesanglierdesardennes@gmail.com
+
+Code : 
+ - https://github.com/Nekrofage/Hexapod
+ 
+Liens : 
+ - http://letsmakerobots.com/node/32854
+ 
+Configuration IDE : 
+ - Serial Monitor : 9600 Baud
+
+*/
+
 #include <IRremote.h>
 #include <IRremoteInt.h> 
 
@@ -58,7 +74,7 @@ void setup() {
   }
   delay(3000);                                             // optional - gives you time to put the robot down before it starts
   
-  if(IRtest==1) Serial.begin(9600);                        // IR test mode displays IR receiver values on serial monitor
+  Serial.begin(9600);                        // IR test mode displays IR receiver values on serial monitor
   irrecv.enableIRIn();                                     // Start the receiver
 }
 
@@ -71,7 +87,7 @@ void loop() {
       Serial.print("Commande IR : ");
       Serial.println(IRC);                     // display value from IR receiver on serial monitor in test mode
     
-    if(IRC==2640 || IRC==528 || IRC==255)                              // STOP
+    if(IRC==2640 || IRC==528 || IRC==16575)                              // STOP
     {
       Serial.print("Stop\n");      
       Speed=0;
@@ -164,6 +180,55 @@ void loop() {
       rotate=0;
       angle=315;
     }
+
+    // Touche 7
+    if(IRC==272 || IRC==6375)                                           // 7    
+    {
+      Serial.print("Key 7\n"); 
+
+    }
+    
+    // Touche 8
+    if(IRC==2576 || IRC==-26521)                                          // 8   
+    {
+      Serial.print("Key 8\n"); 
+
+    }
+    
+    // Touche 9
+    if(IRC==1040 || IRC==22695)                                          // 9    
+    {
+      Serial.print("Key 9\n"); 
+
+    }    
+
+
+    // Touche EQ
+    if(IRC==1040 || IRC==-20401)                                          // EQ    
+    {
+      Serial.print("EQ\n"); 
+    }
+
+    // Touche ST
+    if(IRC==272 || IRC==28815)                                           // ST    
+    {
+      Serial.print("Key ST\n"); 
+
+    }
+    
+    // Touche Vol Down
+    if(IRC==2576 || IRC==4335)                                          // Vol Down    
+    {
+      Serial.print("Vol Down\n"); 
+
+    }
+    
+    // Touche Vol Up
+    if(IRC==1040 || IRC==20655)                                          // Vol Up
+    {
+      Serial.print("Vol Up\n"); 
+    }   
+    
     irrecv.resume();                                       // receive the next value
   }
   
