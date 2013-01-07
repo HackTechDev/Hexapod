@@ -1,25 +1,11 @@
-//============================================================== DAGU 12 DOF Hexapod sample code =====================================
-//                                                                 Written by: Russell Cameron
+#include <IRremote.h>
+#include <IRremoteInt.h> 
 
-
-#include <IRremote.h>                                      // IRremote library written by Ken Shirriff
-#include <IRremoteInt.h>                                   // the library can be downloaded from here: 
-//                                           http://www.arcfn.com/2009/08/multi-protocol-infrared-remote-library.html
-
-
-
-
-//--------------------------- different remotes will generate different values depending on make and model ---------------------------
-//----------------------- use the IRtest mode and serial monitor to display the values received by your remote -----------------------
-
-#define IRtest 1                                           // set to 1 for IR test mode
-
-
-
+#define IRtest 0                                           // set to 1 for IR test mode
 
 #include <Servo.h>                                         // Standard Arduino servo libarary
 
-int svc[12]={                                              // servo center positions (typically 1500uS)
+int svc[12] = {                                              // servo center positions (typically 1500uS)
   1500,1550,1550,1450,                                     // D29 knee1, D46 Hip1, D47 knee2, D48 Hip2
   1500,1400,1500,1550,                                     // D49 knee3, D50 Hip3, D51 knee4, D24 Hip4
   1500,1500,1500,1400                                      // D25 knee5, D26 Hip5, D27 knee6, D28 Hip6
@@ -36,8 +22,7 @@ int RECV_PIN = 10;                                         // define D10 as inpu
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 
-void setup()
-{
+void setup() {
   pinMode(11,OUTPUT);                                      // use D11 as GND for IR receiver
   digitalWrite(11,0);
   pinMode(12,OUTPUT);                                      // use D12 as Vcc for IR receiver
@@ -68,8 +53,7 @@ void setup()
   sv[11].attach(28,800,2200);                              // Hip  6
   delay(40);
   
-  for(int i=0;i<12;i++)
-  {
+  for(int i=0;i<12;i++) {
     sv[i].writeMicroseconds(svc[i]);                       // initialize servos
   }
   delay(3000);                                             // optional - gives you time to put the robot down before it starts
@@ -78,15 +62,14 @@ void setup()
   irrecv.enableIRIn();                                     // Start the receiver
 }
 
-void loop()
-{ 
+void loop() { 
   if (irrecv.decode(&results))                             // check for IR command
   {                                                        // change IRC comparison values to suit your TV, DVD, Stereo remote
     int IRC=results.value;
-    if(IRtest==1){
+    
+
       Serial.print("Commande IR : ");
       Serial.println(IRC);                     // display value from IR receiver on serial monitor in test mode
-    }
     
     if(IRC==2640 || IRC==528 || IRC==255)                              // STOP
     {
@@ -102,12 +85,6 @@ void loop()
       Speed=10;
       rotate=0;
       angle=0;
-      Serial.print(Speed);
-      Serial.print("\n");
-      Serial.print(rotate);
-      Serial.print("\n");
-      Serial.print(angle);
-      Serial.print("\n");
     }
     
     if(IRC==2192 || IRC==3600 || IRC==-28561)                             // REVERSE    
@@ -134,43 +111,55 @@ void loop()
       angle=0;
     }
     
-    if(IRC==16)                                            // 45 DEGREES    
+    // Touche 1
+    if(IRC==16 || IRC==2295)                                            // 45 DEGREES    
     {
+      Serial.print("45 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=45;
     }
     
-    if(IRC==3088)                                          // 90 DEGREES    
+    // Touche 2
+    if(IRC==3088 || IRC==-30601)                                          // 90 DEGREES    
     {
+      Serial.print("90 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=90;
     }
     
-    if(IRC==1552)                                          // 135 DEGREES    
+    // Touche 3
+    if(IRC==1552 || IRC==18615)                                          // 135 DEGREES    
     {
+      Serial.print("135 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=135;
     }
     
-    if(IRC==272)                                           // 225 DEGREES    
+    // Touche 4
+    if(IRC==272 || IRC==10455)                                           // 225 DEGREES    
     {
+      Serial.print("225 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=225;
     }
     
-    if(IRC==2576)                                          // 270 DEGREES    
+    // Touche 5
+    if(IRC==2576 || IRC==-22441)                                          // 270 DEGREES    
     {
+      Serial.print("270 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=270;
     }
     
-    if(IRC==1040)                                          // 315 DEGREES    
+    // Touche 6
+    if(IRC==1040 || IRC==26775)                                          // 315 DEGREES    
     {
+      Serial.print("315 Degrees\n"); 
       Speed=10;
       rotate=0;
       angle=315;
@@ -178,11 +167,19 @@ void loop()
     irrecv.resume();                                       // receive the next value
   }
   
-  //if(IRtest==1) return;                                    // robot does not walk in IRtest mode
   
-  if (angle<0) angle+=360;                                 // keep travel angle within 0°-360°
-  if (angle>359) angle-=360;                               // keep travel angle within 0°-360°
-  Serial.print("Call Walk function\n");
+  if(IRtest == 1) {
+  	return;                                    // robot does not walk in IRtest mode
+  }
+  
+  if (angle < 0) {
+  	angle += 360;                                 // keep travel angle within 0°-360°
+	}
+	
+  if (angle > 359) {
+  	angle -= 360;                               // keep travel angle within 0°-360°
+	}
+	
   Walk();                                                  // move legs to generate walking gait
   delay(15);
 }
@@ -190,7 +187,7 @@ void loop()
 
 void Walk()                                                // all legs move in a circular motion
 {
-  //Serial.print("Inside Walk function\n");
+
   if(Speed==0)                                             // return all legs to default position when stopped
   {
     Stride-=25;                                            // as Stride aproaches 0, all servos return to center position
