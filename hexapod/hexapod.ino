@@ -9,8 +9,12 @@ Code :
 Liens : 
  - http://letsmakerobots.com/node/32854
  
+IDE Arduino 1.0.3 sous Debian Squeeze
+
 Configuration IDE : 
- - Serial Monitor : 9600 Baud
+ - Type de carte : Arduino Mega (ATmega 1280) 
+ - Port Série : /dev/ttyUSB0
+ - Vitesse Serial Monitor : 9600 Baud
 
 */
 
