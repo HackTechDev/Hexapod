@@ -36,9 +36,9 @@ Télécommande :
 // D49 knee3, D50 Hip3, D51 knee4, D24 Hip4
 // D25 knee5, D26 Hip5, D27 knee6, D28 Hip6
 int svc[12] = {
-  1500,1550,1550,1450,
-  1500,1400,1500,1550,
-  1500,1500,1500,1400
+  1500, 1550, 1550, 1450,
+  1500, 1400, 1500, 1550,
+  1500, 1500, 1500, 1400
 };
 
 // Servos can be an array
@@ -62,11 +62,11 @@ IRrecv irrecv(RECV_PIN);
 decode_results results;
 
 void setup() {
-	// use D11 as GND for IR receiver
+  // use D11 as GND for IR receiver
   pinMode(11,OUTPUT);
   digitalWrite(11,0);
 
-	// use D12 as Vcc for IR receiver
+  // use D12 as Vcc for IR receiver
   pinMode(12,OUTPUT);
   digitalWrite(12,1);
 
@@ -121,7 +121,7 @@ void setup() {
   delay(40);
 
   // initialize servos
-  for(int i=0;i<12;i++) {
+  for(int i = 0; i < 12; i++) {
     sv[i].writeMicroseconds(svc[i]);
   }
 
@@ -139,7 +139,7 @@ void loop() {
   // check for IR command
   if (irrecv.decode(&results)) {
   // change IRC comparison values to suit your TV, DVD, Stereo remote
-    int IRC=results.value;
+    int IRC = results.value;
 
 			// display value from IR receiver on serial monitor
       Serial.print("Commande IR : ");
@@ -149,45 +149,45 @@ void loop() {
     // Arret
     if(IRC == 5100) {
       Serial.print("OK : Arret\n");
-      Speed=0;
-      angle=0;
-      rotate=0;
+      Speed = 0;
+      angle = 0;
+      rotate = 0;
     }
 
     // Touche : Haut
     // Avancer
     if(IRC == -27796) {
       Serial.print("Haut : Avancer\n");
-      Speed=10;
-      rotate=0;
-      angle=0;
+      Speed = 10;
+      rotate = 0;
+      angle = 0;
     }
 
     // Touche : Bas
     // Reculer
     if(IRC == 21420) {
       Serial.print("Bas : Reculer\n");
-      Speed=-10;
-      rotate=0;
-      angle=0;
+      Speed = -10;
+      rotate = 0;
+      angle = 0;
     }
 
     // Touche : Droite
     // Rotation horaire
     if(IRC == 13260) {
       Serial.print("Droite : Rotation horaire\n");
-      Speed=10;
-      rotate=1;
-      angle=0;
+      Speed = 10;
+      rotate = 1;
+      angle = 0;
     }
 
     // Touche : Gauche
     // Rotation anti-horaire
     if(IRC == -11476) {
       Serial.print("Gauche : Rotation anti-horaire\n");
-      Speed=10;
-      rotate=-1;
-      angle=0;
+      Speed = 10;
+      rotate = -1;
+      angle = 0;
     }
 
     // Rotation en degres
@@ -196,54 +196,54 @@ void loop() {
     // Rotation : 45
     if(IRC == 3570) {
       Serial.print("1 : 45\n");
-      Speed=10;
-      rotate=0;
-      angle=45;
+      Speed = 10;
+      rotate = 0;
+      angle = 45;
     }
 
     // Touche 2
     // Rotation : 90
     if(IRC == 28050) {
       Serial.print("2 : 90\n");
-      Speed=10;
-      rotate=0;
-      angle=90;
+      Speed = 10;
+      rotate = 0;
+      angle = 90;
     }
 
     // Touche 3
     // Rotation : 135
     if(IRC == 9690) {
       Serial.print("3 : 135\n");
-      Speed=10;
-      rotate=0;
-      angle=135;
+      Speed = 10;
+      rotate = 0;
+      angle = 135;
     }
 
     // Touche 4
     // Rotation : 225
     if(IRC == -29326) {
       Serial.print("4 : 225\n");
-      Speed=10;
-      rotate=0;
-      angle=225;
+      Speed = 10;
+      rotate = 0;
+      angle = 225;
     }
 
     // Touche 5
     // Rotation : 270
     if(IRC == -13006) {
       Serial.print("5 : 270\n");
-      Speed=10;
-      rotate=0;
-      angle=270;
+      Speed = 10;
+      rotate = 0;
+      angle = 270;
     }
 
     // Touche 6
     // Rotation : 315
     if(IRC == -25246) {
       Serial.print("6 : 315\n");
-      Speed=10;
-      rotate=0;
-      angle=315;
+      Speed = 10;
+      rotate = 0;
+      angle = 315;
     }
 
     // Touche 7
@@ -294,28 +294,26 @@ void loop() {
   delay(15);
 }
 
-
-void Walk()
-{
+void Walk() {
 
 	// all legs move in a circular motion
 
 	// return all legs to default position when stopped
   if(Speed == 0) {
   	// as Stride aproaches 0, all servos return to center position
-    Stride-=25;
+    Stride -= 25;
 
     // do not allow negative values, this would reverse movements
-    if(Stride<0)
-    	Stride=0;
+    if(Stride < 0)
+    	Stride = 0;
   } else {
   	// this only affects the robot if it was stopped
   	// slowly increase Stride value so that servos start up smoothly
-    Stride+=25;
+    Stride += 25;
 
      // maximum value reached, prevents legs from colliding.
-    if(Stride>450) {
-	    Stride=450;
+    if(Stride > 450) {
+	    Stride = 450;
     }
   }
 
@@ -329,93 +327,93 @@ void Walk()
   static int Step;
 
   // calculate positions for odd numbered legs 1,3,5
-  for(int i=0;i<6;i+=2) {
+  for(int i = 0; i < 6; i += 2) {
     // angle of leg on the body + angle of travel
-    A=float(60*i+angle);
+    A = float(60*i+angle);
 
     // keep value within 0°-360°
-    if(A>359) {
-    	A-=360;
+    if(A > 359) {
+    	A -= 360;
     }
 
    	// convert degrees to radians for SIN function
-    A=A*PI/180;
+    A = A * PI / 180;
 
     // Xa value for rotation
-    Xa=Stride*rotate;
+    Xa = Stride * rotate;
 
     // hip movement affected by walking angle
     if(rotate == 0) {
     	// Xa hip position multiplier for walking at an angle
-      Xa=sin(A)*-Stride;
+      Xa = sin(A) * -Stride;
     }
 
     // angle of leg
-    A=float(Step);
+    A = float(Step);
 
     // convert degrees to radians for SIN function
-    A=A*PI/180;
-    Knee=sin(A)*Stride;
-    Hip=cos(A)*Xa;
+    A = A * PI / 180;
+    Knee = sin(A) * Stride;
+    Hip = cos(A) * Xa;
 
     // update knee  servos 1,3,5
-    sv[i*2].writeMicroseconds(svc[i*2]+int(Knee));
+    sv[i*2].writeMicroseconds(svc[i*2] + int(Knee));
 
     // update hip servos 1,3,5
-    sv[i*2+1].writeMicroseconds(svc[i*2+1]+int(Hip));
+    sv[i*2+1].writeMicroseconds(svc[i*2+1] + int(Hip));
   }
 
   // calculate positions for even numbered legs 2,4,6
-  for(int i=1;i<6;i+=2) {
+  for(int i = 1; i < 6; i += 2) {
   	// angle of leg on the body + angle of travel
-    A=float(60*i+angle);
+    A = float(60*i+angle);
 
     // keep value within 0°-360°
-    if(A>359) {
-    	A-=360;
+    if(A > 359) {
+    	A -= 360;
     }
 
    	// convert degrees to radians for SIN function
-    A=A*PI/180;
+    A= A * PI / 180;
 
     // Xa value for rotation
-    Xa=Stride*rotate;
+    Xa= Stride * rotate;
 
     // hip movement affected by walking angle
     if(rotate == 0) {
     	// Xa hip position multiplier for walking at an angle
-      Xa=sin(A)*-Stride;
+      Xa = sin(A) * -Stride;
     }
 
     // angle of leg
-    A=float(Step+180);
+    A = float(Step+180);
 
     // keep value within 0°-360°
-    if(A>359) {
-    	A-=360;
+    if(A > 359) {
+    	A -= 360;
     }
 
     // convert degrees to radians for SIN function
-    A=A*PI/180;
-    Knee=sin(A)*Stride;
-    Hip=cos(A)*Xa;
+    A = A * PI / 180;
+    Knee =sin(A) * Stride;
+    Hip = cos(A) * Xa;
 
     // update knee  servos 2,4,6
-    sv[i*2].writeMicroseconds(svc[i*2]+int(Knee));
+    sv[i*2].writeMicroseconds(svc[i*2] + int(Knee));
 
     // update hip servos 2,4,6
-    sv[i*2+1].writeMicroseconds(svc[i*2+1]+int(Hip));
+    sv[i*2+1].writeMicroseconds(svc[i*2+1] + int(Hip));
   }
 
   // cycle through circular motion of gait
-  Step+=Speed;
+  Step += Speed;
 
   // keep value within 0°-360°
-  if (Step>359) {
-  	Step-=360;
+  if (Step > 359) {
+  	Step -= 360;
   }
    // keep value within 0°-360°
-  if (Step<0){
-  	Step+=360;
+  if (Step < 0){
+  	Step += 360;
   }
 }
