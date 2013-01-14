@@ -63,61 +63,61 @@ decode_results results;
 
 void setup() {
   // use D11 as GND for IR receiver
-  pinMode(11,OUTPUT);
-  digitalWrite(11,0);
+  pinMode(11, OUTPUT);
+  digitalWrite(11, 0);
 
   // use D12 as Vcc for IR receiver
-  pinMode(12,OUTPUT);
-  digitalWrite(12,1);
+  pinMode(12, OUTPUT);
+  digitalWrite(12, 1);
 
   Serial.print("Setup");
 
   // knee 1
-  sv[0].attach(29,800,2200);
+  sv[0].attach(29, 800, 2200);
   delay(40);
 
   // Hip  1
-  sv[1].attach(46,800,2200);
+  sv[1].attach(46, 800, 2200);
   delay(40);
 
   // knee 2
-  sv[2].attach(47,800,2200);
+  sv[2].attach(47, 800, 2200);
   delay(40);
 
   // Hip  2
-  sv[3].attach(48,800,2200);
+  sv[3].attach(48, 800, 2200);
   delay(40);
 
   // knee 3
-  sv[4].attach(49,800,2200);
+  sv[4].attach(49, 800, 2200);
   delay(40);
 
   // Hip  3
-  sv[5].attach(50,800,2200);
+  sv[5].attach(50, 800, 2200);
   delay(40);
 
   // knee 4
-  sv[6].attach(51,800,2200);
+  sv[6].attach(51, 800, 2200);
   delay(40);
 
   // Hip  4
-  sv[7].attach(24,800,2200);
+  sv[7].attach(24, 800, 2200);
   delay(40);
 
   // knee 5
-  sv[8].attach(25,800,2200);
+  sv[8].attach(25, 800, 2200);
   delay(40);
 
   // Hip  5
-  sv[9].attach(26,800,2200);
+  sv[9].attach(26, 800, 2200);
   delay(40);
 
   // knee 6
-  sv[10].attach(27,800,2200);
+  sv[10].attach(27, 800, 2200);
   delay(40);
 
   // Hip  6
-  sv[11].attach(28,800,2200);
+  sv[11].attach(28, 800, 2200);
   delay(40);
 
   // initialize servos
@@ -138,10 +138,10 @@ void setup() {
 void loop() {
   // check for IR command
   if (irrecv.decode(&results)) {
-  // change IRC comparison values to suit your TV, DVD, Stereo remote
+    // change IRC comparison values to suit your TV, DVD, Stereo remote
     int IRC = results.value;
 
-			// display value from IR receiver on serial monitor
+      // display value from IR receiver on serial monitor
       Serial.print("Commande IR : ");
       Serial.println(IRC);
 
@@ -283,12 +283,12 @@ void loop() {
   	angle += 360;
 	}
 
-	// keep travel angle within 0°-360°
+  // keep travel angle within 0°-360°
   if (angle > 359) {
   	angle -= 360;
 	}
 
-	// move legs to generate walking gait
+  // move legs to generate walking gait
   Walk();
 
   delay(15);
@@ -296,11 +296,11 @@ void loop() {
 
 void Walk() {
 
-	// all legs move in a circular motion
+  // all legs move in a circular motion
 
-	// return all legs to default position when stopped
+  // return all legs to default position when stopped
   if(Speed == 0) {
-  	// as Stride aproaches 0, all servos return to center position
+    // as Stride aproaches 0, all servos return to center position
     Stride -= 25;
 
     // do not allow negative values, this would reverse movements
@@ -313,7 +313,7 @@ void Walk() {
 
      // maximum value reached, prevents legs from colliding.
     if(Stride > 450) {
-	    Stride = 450;
+      Stride = 450;
     }
   }
 
