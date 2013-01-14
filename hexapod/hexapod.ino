@@ -16,6 +16,9 @@ Configuration IDE :
  - Port Série : /dev/ttyUSB0
  - Vitesse Serial Monitor : 9600 Baud
 
+Télécommande : 
+  - Smart SliderX S-0003
+  
 */
 
 #include <IRremote.h>
@@ -91,7 +94,7 @@ void loop() {
       Serial.print("Commande IR : ");
       Serial.println(IRC);                     // display value from IR receiver on serial monitor in test mode
     
-    if(IRC==2640 || IRC==528 || IRC==16575)                              // STOP
+    if(IRC==5100)                              // OK
     {
       Serial.print("Stop\n");      
       Speed=0;
@@ -99,7 +102,7 @@ void loop() {
       rotate=0;
     }
     
-    if(IRC==144 || IRC==2064 || IRC==-32641)                              // FORWARD
+    if(IRC==-27796)                              // FORWARD
     {
       Serial.print("Forward\n");
       Speed=10;
@@ -107,7 +110,7 @@ void loop() {
       angle=0;
     }
     
-    if(IRC==2192 || IRC==3600 || IRC==-28561)                             // REVERSE    
+    if(IRC==21420)                             // REVERSE    
     {
       Serial.print("Reverse\n"); 
       Speed=-10;
@@ -115,7 +118,7 @@ void loop() {
       angle=0;
     }
     
-    if(IRC==1168 || IRC==24735)                                          // ROTATE CLOCKWISE  
+    if(IRC==13260)                                          // ROTATE CLOCKWISE  
     {
       Serial.print("Rotate Clockwise\n"); 
       Speed=10;
@@ -123,7 +126,7 @@ void loop() {
       angle=0;
     }
     
-    if(IRC==3216 || IRC==8415)                                          // ROTATE COUNTER CLOCKWISE  
+    if(IRC==-11476)                                          // ROTATE COUNTER CLOCKWISE  
     {
       Serial.print("Rotate Counter Clockwise\n"); 
       Speed=10;
@@ -132,7 +135,7 @@ void loop() {
     }
     
     // Touche 1
-    if(IRC==16 || IRC==2295)                                            // 45 DEGREES    
+    if(IRC==3570)                                            // 45 DEGREES    
     {
       Serial.print("45 Degrees\n"); 
       Speed=10;
@@ -141,7 +144,7 @@ void loop() {
     }
     
     // Touche 2
-    if(IRC==3088 || IRC==-30601)                                          // 90 DEGREES    
+    if(IRC==28050)                                          // 90 DEGREES    
     {
       Serial.print("90 Degrees\n"); 
       Speed=10;
@@ -150,7 +153,7 @@ void loop() {
     }
     
     // Touche 3
-    if(IRC==1552 || IRC==18615)                                          // 135 DEGREES    
+    if(IRC==9690)                                          // 135 DEGREES    
     {
       Serial.print("135 Degrees\n"); 
       Speed=10;
@@ -159,7 +162,7 @@ void loop() {
     }
     
     // Touche 4
-    if(IRC==272 || IRC==10455)                                           // 225 DEGREES    
+    if(IRC==-29326)                                           // 225 DEGREES    
     {
       Serial.print("225 Degrees\n"); 
       Speed=10;
@@ -168,7 +171,7 @@ void loop() {
     }
     
     // Touche 5
-    if(IRC==2576 || IRC==-22441)                                          // 270 DEGREES    
+    if(IRC==-13006)                                          // 270 DEGREES    
     {
       Serial.print("270 Degrees\n"); 
       Speed=10;
@@ -177,7 +180,7 @@ void loop() {
     }
     
     // Touche 6
-    if(IRC==1040 || IRC==26775)                                          // 315 DEGREES    
+    if(IRC==-25246)                                          // 315 DEGREES    
     {
       Serial.print("315 Degrees\n"); 
       Speed=10;
@@ -186,52 +189,31 @@ void loop() {
     }
 
     // Touche 7
-    if(IRC==272 || IRC==6375)                                           // 7    
+    if(IRC==11730)                                           // 7    
     {
       Serial.print("Key 7\n"); 
 
     }
     
     // Touche 8
-    if(IRC==2576 || IRC==-26521)                                          // 8   
+    if(IRC==5610)                                          // 8   
     {
       Serial.print("Key 8\n"); 
 
     }
     
     // Touche 9
-    if(IRC==1040 || IRC==22695)                                          // 9    
+    if(IRC==30090)                                          // 9    
     {
       Serial.print("Key 9\n"); 
 
     }    
 
-
-    // Touche EQ
-    if(IRC==1040 || IRC==-20401)                                          // EQ    
+    // Touche 0
+    if(IRC==-2806)                                          // 0
     {
-      Serial.print("EQ\n"); 
+      Serial.print("Key 0\n"); 
     }
-
-    // Touche ST
-    if(IRC==272 || IRC==28815)                                           // ST    
-    {
-      Serial.print("Key ST\n"); 
-
-    }
-    
-    // Touche Vol Down
-    if(IRC==2576 || IRC==4335)                                          // Vol Down    
-    {
-      Serial.print("Vol Down\n"); 
-
-    }
-    
-    // Touche Vol Up
-    if(IRC==1040 || IRC==20655)                                          // Vol Up
-    {
-      Serial.print("Vol Up\n"); 
-    }   
     
     irrecv.resume();                                       // receive the next value
   }
